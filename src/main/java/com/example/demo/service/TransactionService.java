@@ -47,7 +47,7 @@ public class TransactionService {
         String endDate = date.format(DateTimeFormatter.ISO_LOCAL_DATE);
         String outputSize = "1"; // Fetch only 1 record to minimize data transfer
         String url = String.format(
-            "https://api.twelvedata.com/time_series?symbol=%s&interval=1day&outputsize=%s&end_date=%s&apikey=%s",
+            "https://api.twelvedata.com/time_series?symbol=%s&interval=1min&outputsize=%s&end_date=%s&apikey=%s",
             symbol, outputSize, endDate, apiKey
         );
 

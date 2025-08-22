@@ -4,8 +4,8 @@
     <div th:fragment="content">
         <div class="p-4 sm:ml-64">
             <div class="p-4 ">
-               <div class="grid grid-cols-3 gap-4 mb-4">
-                <!-- KPI row -->
+               <!-- KPI row -->
+               <div class="grid grid-cols-3 gap-4 mb-4">             
                   <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
                     <div class="text-center">
                         <div class="font-normal text-gray-700 dark:text-gray-400">Total Net Worth</div>
@@ -44,6 +44,7 @@
              </div>
 
 
+             <!-- Add stock and search cards -->
                <div class="grid grid-cols-2 gap-4 mb-4">
                   <!-- Add Stock -->
                   <div class="flex items-center justify-center rounded-sm bg-gray-50 h-96 dark:bg-gray-800">
@@ -55,22 +56,20 @@
                      <div class="w-full max-w-lg" th:replace="search-form :: searchForm"></div>
                   </div>
 
-                  
-                  <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                     <p class="text-2xl text-gray-400 dark:text-gray-500">
-                        <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                        </svg>
-                     </p>
-                  </div>
-                  <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800">
-                     <p class="text-2xl text-gray-400 dark:text-gray-500">
-                        <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                        </svg>
-                     </p>
+               </div>
+
+               <!-- News row -->
+               <div class="grid grid-cols-3 gap-4 mb-4 news-row">
+                  <!-- Dynamically render news cards -->
+                  <div th:each="news, iterStat : ${newsList}" class="flex items-center justify-center h-128 rounded-sm bg-gray-50 dark:bg-gray-800">
+                     <div class="w-full max-w-lg" 
+                           th:replace="~{news-card :: newsCard(id=${iterStat.index + 1}, title=${news.title}, description=${news.description}, link=${news.link})}">
+                     </div>
                   </div>
                </div>
+
+
+
                <div class="flex items-center justify-center h-48 mb-4 rounded-sm bg-gray-50 dark:bg-gray-800">
                   <p class="text-2xl text-gray-400 dark:text-gray-500">
                      <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">

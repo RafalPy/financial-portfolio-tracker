@@ -2,19 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
     <div th:fragment="buyForm">
-        <h2 class="text-2xl font-bold text-indigo-700 mb-6 text-center">Add New Transaction</h2>
-        <form action="/" method="post" class="space-y-6">
-            <div>
-                <label for="date" class="block text-sm font-medium text-gray-700">Purchase Date</label>
-                <input type="date" id="date" name="date" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+        <h2 class="text-2xl font-bold text-indigo-700 mb-6 text-center">Buy stock</h2>
+        <form action="/" method="post" class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Purchase Date</label>
+                <input type="date" id="date" name="date" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" />
             </div>
-            <div>
-                <label for="assetSymbol" class="block text-sm font-medium text-gray-700">Stock Symbol</label>
-                <input type="text" id="assetSymbol" name="assetSymbol" maxlength="20" required placeholder="e.g. AAPL" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+            <div class="mb-5">
+                <label for="assetSymbol" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock Symbol</label>
+                <input type="text" id="assetSymbol" name="assetSymbol" maxlength="20" required placeholder="e.g. AAPL" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" />
             </div>
-            <div>
-                <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
-                <input type="number" id="quantity" name="quantity" step="0.01" min="0" required placeholder="e.g. 10" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+            <div class="mb-5">
+                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
+                <input type="number" id="quantity" name="quantity" step="0.01" min="0" required placeholder="e.g. 10" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" />
             </div>
             <!-- Hidden/default fields -->
             <input type="hidden" name="transactionType" value="BUY">
@@ -25,7 +25,8 @@
             <input type="hidden" name="pricePerUnit" value="">
             <input type="hidden" name="totalAmount" value="">
             <div class="flex justify-center">
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-200">Submit</button>
+                <button type="submit" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-indigo-700">
+                    Buy</button>
             </div>
         </form>
     </div>

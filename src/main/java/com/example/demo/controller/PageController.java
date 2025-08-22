@@ -30,4 +30,5 @@ public class PageController {
         return "redirect:/"; // Redirect or return a view name
     }
 
+    // test
 }

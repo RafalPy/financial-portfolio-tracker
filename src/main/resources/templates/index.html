@@ -12,6 +12,30 @@
       <h1 class="text-4xl font-extrabold text-white tracking-tight drop-shadow-lg text-center">Ichiban Portfolio Tracker</h1>
       <p class="text-lg text-indigo-100 text-center mt-2">Track your investments with style and ease</p>
     </div>
+    <style>
+      .news-item {
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+      }
+      .news-item h3 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+      .news-item h3 a {
+        color: #007bff;
+        text-decoration: none;
+      }
+      .news-item h3 a:hover {
+        text-decoration: underline;
+      }
+      .news-item p {
+        margin: 0.5rem 0 0;
+        color: #555;
+      }
+    </style>
   </header>
 
   <div class="flex justify-center items-center">
@@ -118,5 +142,26 @@
         </tbody>
     </table>
 <h2>Total Portfolio Value: $<span th:text="${totalValue}">0.00</span></h2>
+
+<style>
+    #rss-feed-list a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    #rss-feed-list a:hover {
+      text-decoration: underline;
+    }
+  </style>
+
+
+    <div id="rss-feed" class="bg-white rounded-xl shadow-xl p-4 mt-8">
+      <h2 class="text-2xl font-bold text-indigo-700 mb-4">Latest financial news</h2>
+      <ul id="rss-feed-list" class="space-y-4">
+        <!-- News links will be dynamically inserted here -->
+      </ul>
+    </div>
+    
+    <script src="/js/rss-feed.js"></script>
 </body>
 </html>

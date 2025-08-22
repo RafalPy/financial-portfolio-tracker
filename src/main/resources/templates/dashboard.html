@@ -26,8 +26,13 @@
                     <div class="text-center">
                         <div class="font-normal text-gray-700 dark:text-gray-400">Last Transaction</div>
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            <span th:text="${latestTransaction.transactionType}"></span>
-                            <span th:text="${latestTransaction.assetSymbol}"></span>
+                           <div th:if="${latestTransaction != null}">
+                              <span th:text="${latestTransaction.transactionType}"></span>
+                              <span th:text="${latestTransaction.assetSymbol}"></span>
+                          </div>
+                          <div th:if="${latestTransaction == null}">
+                              <span>No recent transactions</span>
+                          </div>
                         </h5>
                     </div>
                   </div>

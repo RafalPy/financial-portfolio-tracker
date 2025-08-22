@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}">Default Title</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Flowbite CDN (Optional for the future use if required)
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    -->
+</head>
+<body>
+    <header>
+        <div th:replace="navbar :: navbar"></div>
+    </header>
+
+    <main>
+        <!-- This is where child content will be inserted -->
+        <div th:replace="${content}"></div>
+    </main>
+
+    <footer>
+        <p>© 2025 My Application</p>
+    </footer>
+
+    <!-- Flowbite JS (Optional for the future use if required)
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    -->
+</body>
+</html>

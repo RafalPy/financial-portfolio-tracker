@@ -24,7 +24,9 @@ public class PageController {
 
     @GetMapping("/")
     public String indexPage(Model model) {
-        model.addAttribute("transactions", transactionService.getAll());
+        List<Transaction> transactions = transactionService.getAll();
+
+        model.addAttribute("transactions", transactions);
         List<PortfolioHolding> portfolioHoldings = transactionService.getPortfolioHoldings();
         model.addAttribute("portfolioHoldings", portfolioHoldings);
         // Calculate total portfolio value
@@ -32,7 +34,14 @@ public class PageController {
         .mapToDouble(holding -> holding.getTotalQuantity().multiply(holding.getAveragePrice()).doubleValue())
         .sum();
         model.addAttribute("totalValue", totalValue);
-        return "index";
+        int portfolioHoldingsCount = portfolioHoldings.size();
+        model.addAttribute("portfolioHoldingsCount", portfolioHoldingsCount);
+
+        Transaction latestTransaction = transactions.isEmpty() ? null : transactions.get(transactions.size() - 1);
+        model.addAttribute("latestTransaction", latestTransaction);
+        
+        model.addAttribute("content", "dashboard");
+        return "layout";
     }
 
     @PostMapping("/")

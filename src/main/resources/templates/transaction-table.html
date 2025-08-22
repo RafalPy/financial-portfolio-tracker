@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="transactionTable" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="min-w-full bg-white border border-gray-200">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-2 text-left">ID</th>
+            <th class="px-4 py-2 text-left">Type</th>
+            <th class="px-4 py-2 text-left">Symbol</th>
+            <th class="px-4 py-2 text-left">Name</th>
+            <th class="px-4 py-2 text-left">Asset Type</th>
+            <th class="px-4 py-2 text-right">Quantity</th>
+            <th class="px-4 py-2 text-right">Price/Unit</th>
+            <th class="px-4 py-2 text-right">Total</th>
+            <th class="px-4 py-2 text-left">Currency</th>
+            <th class="px-4 py-2 text-left">Exchange</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="transaction : ${transactions}" class="border-t hover:bg-gray-50">
+            <td class="px-4 py-2" th:text="${transaction.transactionId}">ID</td>
+            <td class="px-4 py-2" th:text="${transaction.transactionType}">Type</td>
+            <td class="px-4 py-2" th:text="${transaction.assetSymbol}">Symbol</td>
+            <td class="px-4 py-2" th:text="${transaction.assetName}">Name</td>
+            <td class="px-4 py-2" th:text="${transaction.assetType}">Asset Type</td>
+            <td class="px-4 py-2 text-right" th:text="${transaction.quantity}">Qty</td>
+            <td class="px-4 py-2 text-right" th:text="${transaction.pricePerUnit}">Price/Unit</td>
+            <td class="px-4 py-2 text-right" th:text="${transaction.totalAmount}">Total</td>
+            <td class="px-4 py-2" th:text="${transaction.currency}">Currency</td>
+            <td class="px-4 py-2" th:text="${transaction.exchange}">Exchange</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+
+
+</body>
+</html>

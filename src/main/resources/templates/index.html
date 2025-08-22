@@ -91,6 +91,7 @@
                 <th>Asset Name</th>
                 <th>Total Quantity</th>
                 <th>Average Price</th>
+                <th>Sell</th>
             </tr>
         </thead>
         <tbody>
@@ -99,6 +100,20 @@
                 <td th:text="${holding.assetName}"></td>
                 <td th:text="${holding.totalQuantity}"></td>
                 <td th:text="${holding.averagePrice}"></td>
+                <td>
+                    <form action="/" method="post" class="inline">
+                        <input type="hidden" name="assetSymbol" th:value="${holding.assetSymbol}" />
+                        <input type="number" name="quantity" step="0.01" min="0" th:max="${holding.totalQuantity}" required placeholder="Quantity to sell" class="border rounded px-2 py-1" />
+
+                        <input type="hidden" name="transactionType" value="SELL">
+                        <input type="hidden" name="assetType" value="STOCK">
+                        <input type="hidden" name="currency" value="USD">
+                        <input type="hidden" name="exchange" value="NASDAQ">
+                        <input type="hidden" name="assetName" value="">
+
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded-lg shadow transition duration-200">Sell</button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>

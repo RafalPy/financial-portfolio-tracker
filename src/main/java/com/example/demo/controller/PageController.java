@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,9 @@ public class PageController {
 
     @PostMapping("/")
     public String createTransactionForm(@ModelAttribute Transaction transaction) {
+        if (transaction.getDate() == null) {
+        transaction.setDate(LocalDate.now()); // Set the current date if null
+        }
         transactionService.createTransaction(transaction);
         return "redirect:/"; // Redirect or return a view name
     }

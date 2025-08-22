@@ -50,6 +50,7 @@ public class Transaction {
 
     private String exchange;
 
+    // Date when the transaction record in db was created
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt;
 
@@ -59,10 +60,10 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Long transactionId, TransactionType transactionType, String assetSymbol, String assetName,
+    public Transaction(TransactionType transactionType, String assetSymbol, String assetName,
                        AssetType assetType, BigDecimal quantity, BigDecimal pricePerUnit, BigDecimal totalAmount,
                        String currency, String exchange, LocalDate createdAt) {
-        this.transactionId = transactionId;
+        //this.transactionId = transactionId; // This might be redudndant and handled by JPA, create inconsistencies
         this.transactionType = transactionType;
         this.assetSymbol = assetSymbol;
         this.assetName = assetName;

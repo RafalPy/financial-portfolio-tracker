@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-    <div th:fragment="searchForm">
-        <h2 class="text-2xl font-bold text-indigo-700 mb-6 text-center">Search a Transaction</h2>
-        <form action="/" method="post" class="space-y-6">
-            <div>
-                <label for="date" class="block text-sm font-medium text-gray-700">Purchase Date</label>
-                <input type="date" id="date" name="date" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-            </div>
+<div th:fragment="searchForm">
+    <h2 class="text-2xl font-bold text-indigo-700 mb-4 text-center">Filter Transactions</h2>
+    <form action="/" method="get" class="space-y-4">
+
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Stock Symbol -->
             <div>
                 <label for="assetSymbol" class="block text-sm font-medium text-gray-700">Stock Symbol</label>
-                <input type="text" id="assetSymbol" name="assetSymbol" maxlength="20" required placeholder="e.g. AAPL" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                <input type="text" id="assetSymbol" name="assetSymbol" maxlength="20" placeholder="e.g. AAPL"
+                       class="mt-0.5 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
             </div>
+
+            <!-- Stock Name -->
             <div>
-                <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
-                <input type="number" id="quantity" name="quantity" step="0.01" min="0" required placeholder="e.g. 10" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                <label for="assetName" class="block text-sm font-medium text-gray-700">Stock Name</label>
+                <input type="text" id="assetName" name="assetName" maxlength="50" placeholder="e.g. Apple Inc."
+                       class="mt-0.5 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
             </div>
-            <!-- Hidden/default fields -->
-            <input type="hidden" name="transactionType" value="BUY">
-            <input type="hidden" name="assetType" value="STOCK">
-            <input type="hidden" name="currency" value="USD">
-            <input type="hidden" name="exchange" value="NASDAQ">
-            <input type="hidden" name="assetName" value="">
-            <input type="hidden" name="pricePerUnit" value="">
-            <input type="hidden" name="totalAmount" value="">
-            <div class="flex justify-center">
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-200">Submit</button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Transaction Type Dropdown -->
+            <div>
+                <label for="transactionType" class="block text-sm font-medium text-gray-700">Transaction Type</label>
+                <select id="transactionType" name="transactionType"
+                        class="mt-0.5 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <option value="">-- Select Transaction Type --</option>
+                    <option th:each="type : ${T(com.example.demo.entity.TransactionType).values()}"
+                            th:value="${type}" th:text="${type}"></option>
+                </select>
             </div>
-        </form>
-    </div>
+
+            <!-- Asset Type Dropdown -->
+            <div>
+                <label for="assetType" class="block text-sm font-medium text-gray-700">Asset Type</label>
+                <select id="assetType" name="assetType"
+                        class="mt-0.5 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <option value="">-- Select Asset Type --</option>
+                    <option th:each="type : ${T(com.example.demo.entity.AssetType).values()}"
+                            th:value="${type}" th:text="${type}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <!-- From Date -->
+            <div>
+                <label for="fromDate" class="block text-sm font-medium text-gray-700">From Date</label>
+                <input type="date" id="fromDate" name="fromDate"
+                       class="mt-0.5 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+            </div>
+
+            <!-- To Date -->
+            <div>
+                <label for="toDate" class="block text-sm font-medium text-gray-700">To Date</label>
+                <input type="date" id="toDate" name="toDate"
+                       class="mt-0.5 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-center">
+            <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-200">
+                Filter
+            </button>
+        </div>
+
+    </form>
+</div>
 </body>
-</html>
+<

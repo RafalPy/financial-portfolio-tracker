@@ -25,10 +25,12 @@
                   <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
                     <div class="text-center">
                         <div class="font-normal text-gray-700 dark:text-gray-400">Last Transaction</div>
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+
+                        <div th:if="${latestTransaction !=null}">
                             <span th:text="${latestTransaction.transactionType}"></span>
                             <span th:text="${latestTransaction.assetSymbol}"></span>
-                        </h5>
+                        </div>
+
                     </div>
                   </div>
                </div>

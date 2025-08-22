@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.demo.dto.TransactionSearchRequest;
+import com.example.demo.service.TransactionSearchService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,37 +14,54 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.dto.PortfolioHolding;
 import com.example.demo.entity.Transaction;
 import com.example.demo.service.TransactionService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
 
     private final TransactionService transactionService;
+    private final TransactionSearchService transactionSearchService;
+    public PageController(TransactionService transactionService,TransactionSearchService transactionSearchService) {
 
-    public PageController(TransactionService transactionService) {
+        this.transactionSearchService = transactionSearchService;
         this.transactionService = transactionService;
     }
 
     @GetMapping("/")
-    public String indexPage(Model model) {
-        List<Transaction> transactions = transactionService.getAll();
+    public String indexPage(@ModelAttribute TransactionSearchRequest transactionSearchRequest, Model model) {
 
+        List<Transaction> transactions = transactionSearchService.searchTransactions(transactionSearchRequest);
         model.addAttribute("transactions", transactions);
+
+        // 2. Portfolio holdings
         List<PortfolioHolding> portfolioHoldings = transactionService.getPortfolioHoldings();
         model.addAttribute("portfolioHoldings", portfolioHoldings);
-        // Calculate total portfolio value
+
+        // 3. Calculate total portfolio value
         double totalValue = portfolioHoldings.stream()
-        .mapToDouble(holding -> holding.getTotalQuantity().multiply(holding.getAveragePrice()).doubleValue())
-        .sum();
+                .mapToDouble(holding -> holding.getTotalQuantity()
+                        .multiply(holding.getAveragePrice())
+                        .doubleValue())
+                .sum();
         model.addAttribute("totalValue", totalValue);
+
+        // 4. Number of distinct holdings
         int portfolioHoldingsCount = portfolioHoldings.size();
         model.addAttribute("portfolioHoldingsCount", portfolioHoldingsCount);
 
-        Transaction latestTransaction = transactions.isEmpty() ? null : transactions.get(transactions.size() - 1);
+        // 5. Latest transaction
+        Transaction latestTransaction = transactions.isEmpty()
+                ? null
+                : transactions.get(transactions.size() - 1);
         model.addAttribute("latestTransaction", latestTransaction);
-        
+
+        // 6. Which Thymeleaf fragment to load in layout.html
         model.addAttribute("content", "dashboard");
+
         return "layout";
     }
+
+
 
     @PostMapping("/")
     public String createTransactionForm(@ModelAttribute Transaction transaction) {

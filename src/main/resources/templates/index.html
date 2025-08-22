@@ -35,7 +35,6 @@
         <input type="hidden" name="assetType" value="STOCK">
         <input type="hidden" name="currency" value="USD">
         <input type="hidden" name="exchange" value="NASDAQ">
-        <input type="hidden" name="createdAt" value="">
         <input type="hidden" name="assetName" value="">
         <input type="hidden" name="pricePerUnit" value="">
         <input type="hidden" name="totalAmount" value="">
@@ -84,7 +83,25 @@
   </div>
 </div>
 
-
-
+<h1>Portfolio Holdings</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Asset Symbol</th>
+                <th>Asset Name</th>
+                <th>Total Quantity</th>
+                <th>Average Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="holding : ${portfolioHoldings}">
+                <td th:text="${holding.assetSymbol}"></td>
+                <td th:text="${holding.assetName}"></td>
+                <td th:text="${holding.totalQuantity}"></td>
+                <td th:text="${holding.averagePrice}"></td>
+            </tr>
+        </tbody>
+    </table>
+<h2>Total Portfolio Value: $<span th:text="${totalValue}">0.00</span></h2>
 </body>
 </html>

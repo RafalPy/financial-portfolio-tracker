@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.dto.PortfolioHolding;
 import com.example.demo.entity.AssetType;
 import com.example.demo.entity.Transaction;
 import com.example.demo.entity.TransactionType;
@@ -17,7 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import io.github.cdimascio.dotenv.Dotenv;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 
@@ -37,7 +41,7 @@ public class TransactionService {
         // Fetch price from external API using assetSymbol and transaction.getDate()
         BigDecimal price = fetchPriceFromApi(transaction.getAssetSymbol(), transaction.getDate());
         transaction.setPricePerUnit(price);
-        // ...other business logic.............................
+        // ...other business logic...
         return transactionRepository.save(transaction);
     }
 
@@ -72,4 +76,47 @@ public class TransactionService {
     public List<Transaction> getAll() {
         return transactionRepository.findAll();
     }
+
+
+    public List<PortfolioHolding> getPortfolioHoldings() {
+        List<Transaction> transactions = transactionRepository.findAll();
+
+        Map<String, PortfolioHolding> holdingsMap = new HashMap<>();
+
+        for (Transaction transaction : transactions) {
+            String assetSymbol = transaction.getAssetSymbol();
+            BigDecimal quantity = transaction.getQuantity();
+            BigDecimal pricePerUnit = transaction.getPricePerUnit();
+
+            if (transaction.getTransactionType() == TransactionType.SELL) {
+                quantity = quantity.negate();
+            }
+
+            PortfolioHolding holding = holdingsMap.getOrDefault(assetSymbol, new PortfolioHolding(
+                    assetSymbol,
+                    transaction.getAssetName(),
+                    BigDecimal.ZERO,
+                    BigDecimal.ZERO
+            ));
+
+            BigDecimal newTotalQuantity = holding.getTotalQuantity().add(quantity);
+            BigDecimal newAveragePrice = holding.getAveragePrice();
+
+            if (quantity.compareTo(BigDecimal.ZERO) > 0) {
+                BigDecimal totalCost = holding.getAveragePrice().multiply(holding.getTotalQuantity())
+                        .add(pricePerUnit.multiply(quantity));
+                newAveragePrice = totalCost.divide(newTotalQuantity, BigDecimal.ROUND_HALF_UP);
+            }
+
+            holding.setTotalQuantity(newTotalQuantity);
+            holding.setAveragePrice(newAveragePrice);
+
+            holdingsMap.put(assetSymbol, holding);
+        }
+
+        return holdingsMap.values().stream()
+                .filter(holding -> holding.getTotalQuantity().compareTo(BigDecimal.ZERO) > 0)
+                .collect(Collectors.toList());
+    }
+
 }

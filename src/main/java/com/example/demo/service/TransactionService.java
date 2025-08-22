@@ -41,44 +41,33 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
-
+    // API DOCS https://support.twelvedata.com/en/articles/5214728-getting-historical-data
     private BigDecimal fetchPriceFromApi(String symbol, LocalDate date) {
-        String startDate = date.minusDays(7).format(DateTimeFormatter.ISO_LOCAL_DATE);
-        String endDate = date.plusDays(7).format(DateTimeFormatter.ISO_LOCAL_DATE);
+        // Example API call to fetch only last historical price - for given date (day)
+        String endDate = date.format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String outputSize = "1"; // Fetch only 1 record to minimize data transfer
         String url = String.format(
-            "https://api.twelvedata.com/time_series?symbol=%s&interval=1day&start_date=%s&end_date=%s&apikey=%s",
-            symbol, startDate, endDate, apiKey
+            "https://api.twelvedata.com/time_series?symbol=%s&interval=1day&outputsize=%s&end_date=%s&apikey=%s",
+            symbol, outputSize, endDate, apiKey
         );
 
         String response = restTemplate.getForObject(url, String.class);
         JSONObject json = new JSONObject(response);
 
+        // Check if the response contains the "values" array
         if (json.has("values")) {
             JSONArray values = json.getJSONArray("values");
 
-            LocalDate closestDate = null;
-            BigDecimal closestPrice = null;
-            long minDiff = Long.MAX_VALUE;
-
-            for (int i = 0; i < values.length(); i++) {
-                JSONObject dayData = values.getJSONObject(i);
-                LocalDate day = LocalDate.parse(dayData.getString("datetime"));
-                long diff = Math.abs(day.toEpochDay() - date.toEpochDay());
-
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    closestDate = day;
-                    closestPrice = new BigDecimal(dayData.getString("close"));
-                }
-            }
-
-            if (closestPrice != null) {
-                return closestPrice;
+            // Extract the first (and only) record from the "values" array
+            if (values.length() > 0) {
+                JSONObject dayData = values.getJSONObject(0);
+                return new BigDecimal(dayData.getString("close"));
             }
         }
 
-        throw new RuntimeException("Price not found for symbol: " + symbol + " near date: " + date);
-    }
+        // Throw an exception if the price is not found
+        throw new RuntimeException("Price not found for symbol: " + symbol + " on or near date: " + date);
+        }
 
     public List<Transaction> getAll() {
         return transactionRepository.findAll();

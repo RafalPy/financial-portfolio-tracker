@@ -10,7 +10,7 @@
                 <th scope="col" class="px-6 py-3">Color</th>
                 <th scope="col" class="px-6 py-3">Category</th>
                 <th scope="col" class="px-6 py-3">Price</th>
-                <th scope="col" class="px-6 py-3">Action</th>
+                <th scope="col" class="px-6 py-3">Sell</th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
                 <td class="px-6 py-4">
                     <form action="/" method="post" class="inline">
                         <input type="hidden" name="assetSymbol" th:value="${holding.assetSymbol}" />
-                        <input type="number" name="quantity" step="0.01" min="0" th:max="${holding.totalQuantity}" required placeholder="Quantity to sell" class="border rounded px-2 py-1" />
+                        <input type="number" name="quantity" step="0.01" min="0" th:max="${holding.totalQuantity}" required placeholder="Qty" class="border rounded px-2 py-1" />
                         <input type="hidden" name="transactionType" value="SELL">
                         <input type="hidden" name="assetType" value="STOCK">
                         <input type="hidden" name="currency" value="USD">

@@ -65,4 +65,8 @@ public class PageController {
         return "redirect:/"; // Redirect or return a view name
     }
 
+    @GetMapping("/ai_chat")
+    public String chatPage() {
+        return "ai-chat";
+    }
 }

@@ -8,8 +8,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/api/ai")
 public class AiChatController {

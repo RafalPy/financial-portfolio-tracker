@@ -2,11 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
     <div th:fragment="content">
-        <div class="p-4 mb-4 rounded-sm bg-yellow-50 border border-yellow-200 dark:bg-yellow-900 dark:border-yellow-700">
-            <p class="text-lg text-yellow-800 dark:text-yellow-100 font-semibold" th:text="${aiMessageResponse}">
-                Loading AI advice...
-            </p>
-        </div>
+        <!-- Include the AI Response Fragment -->
+        <div th:replace="ai-tip-response :: aiResponse"></div>
 
         <div class="p-4 sm:ml-64">
             <div class="p-4 ">

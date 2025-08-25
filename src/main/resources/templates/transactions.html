@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="content">
+        <div class="p-4 sm:ml-64">
+            <div class="p-4 ">
+               <!-- KPI row -->
+               <div class="grid grid-cols-3 gap-4 mb-4">             
+                  <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
+                    <div class="text-center">
+                        <div class="font-normal text-gray-700 dark:text-gray-400">Placeholder</div>
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <span>abc</span>
+                        </h5>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
+                    <div class="text-center">
+                        <div class="font-normal text-gray-700 dark:text-gray-400">Placeholder</div>
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <span>abc</span>
+                        </h5>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-center h-24 rounded-sm bg-gray-50 dark:bg-gray-800">
+                    <div class="text-center">
+                        <div class="font-normal text-gray-700 dark:text-gray-400">Last Transaction</div>
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                           <div th:if="${latestTransaction != null}">
+                              <span th:text="${latestTransaction.transactionType}"></span>
+                              <span th:text="${latestTransaction.assetSymbol}"></span>
+                          </div>
+                          <div th:if="${latestTransaction == null}">
+                              <span>No recent transactions</span>
+                          </div>
+                        </h5>
+                    </div>
+                  </div>
+               </div>
+
+
+               <!-- Transactions Table -->
+               <div class="flex items-center justify-center h-96 mb-4 rounded-sm bg-gray-50 dark:bg-gray-800">
+                <div class="w-full h-full" th:replace="transaction-table :: transactionTable"></div>
+             </div>
+
+
+             <!-- Add stock and search cards -->
+               <div class="grid grid-cols-2 gap-4 mb-4">
+                  <!-- Add Stock -->
+                  <div class="flex items-center justify-center rounded-sm bg-gray-50 h-96 dark:bg-gray-800">
+                     <div class="w-full max-w-lg" th:replace="buy-form :: buyForm"></div>
+                  </div>
+
+                  <!-- Search in Transactions -->
+                  <div class="flex items-center justify-center rounded-sm bg-gray-50 h-96 dark:bg-gray-800">
+                     <div class="w-full max-w-lg" th:replace="search-form :: searchForm"></div>
+                  </div>
+
+               </div>
+
+
+               <!-- News Section -->
+
+               
+            </div>
+         </div>
+
+
+
+
+    </div>
+</body>
+</html>

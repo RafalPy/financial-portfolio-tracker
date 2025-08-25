@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.dto.PortfolioHolding;
+import com.example.demo.dto.RssFeedItem;
 import com.example.demo.entity.Transaction;
+import com.example.demo.service.RssFeedService;
 import com.example.demo.service.TransactionService;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,11 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PageController {
 
     private final TransactionService transactionService;
-    private final TransactionSearchService transactionSearchService;
-    public PageController(TransactionService transactionService,TransactionSearchService transactionSearchService) {
+    private final RssFeedService rssFeedService;
 
-        this.transactionSearchService = transactionSearchService;
+    public PageController(TransactionService transactionService,
+                          RssFeedService rssFeedService) {
         this.transactionService = transactionService;
+        this.rssFeedService = rssFeedService;
     }
 
     @GetMapping("/")
@@ -55,7 +58,13 @@ public class PageController {
                 : transactions.get(transactions.size() - 1);
         model.addAttribute("latestTransaction", latestTransaction);
 
-        // 6. Which Thymeleaf fragment to load in layout.html
+        // Fetch news list and limit to 3 elements
+        List<RssFeedItem> newsList = rssFeedService.getLatestNews();
+        if (newsList.size() > 3) {
+            newsList = newsList.subList(0, 3); // Trim the list to the first 3 elements
+        }
+        model.addAttribute("newsList", newsList);
+
         model.addAttribute("content", "dashboard");
 
         return "layout";

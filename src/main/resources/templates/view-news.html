@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="content">
+        <div class="p-4 sm:ml-64">
+            <div class="p-4 ">
+               <!-- News row -->
+               <div class="grid grid-cols-3 gap-4 mb-4 news-row">
+                <!-- Dynamically render news cards -->
+                <div th:each="news, iterStat : ${newsList}" class="flex items-center justify-center h-128 rounded-sm bg-gray-50 dark:bg-gray-800">
+                   <div class="w-full max-w-lg" 
+                         th:replace="~{news-card :: newsCard(id=${iterStat.index + 1}, title=${news.title}, description=${news.description}, link=${news.link})}">
+                   </div>
+                </div>
+             </div>
+
+
+
+
+               </div>
+               
+            </div>
+         </div>
+
+
+
+
+    </div>
+</body>
+</html>

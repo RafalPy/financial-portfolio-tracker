@@ -43,10 +43,6 @@
                   <div class="w-full h-full" th:replace="portfolio-table :: portfolioTable"></div>
                </div>
 
-               <!-- Transactions Table -->
-               <div class="flex items-center justify-center h-96 mb-4 rounded-sm bg-gray-50 dark:bg-gray-800">
-                <div class="w-full h-full" th:replace="transaction-table :: transactionTable"></div>
-             </div>
 
 
              <!-- Add stock and search cards -->
@@ -56,23 +52,10 @@
                      <div class="w-full max-w-lg" th:replace="buy-form :: buyForm"></div>
                   </div>
 
-                  <!-- Search in Transactions -->
-                  <div class="flex items-center justify-center rounded-sm bg-gray-50 h-96 dark:bg-gray-800">
-                     <div class="w-full max-w-lg" th:replace="search-form :: searchForm"></div>
-                  </div>
 
                </div>
 
-               <!-- News row -->
-               <div class="grid grid-cols-3 gap-4 mb-4 news-row">
-                  <!-- Dynamically render news cards -->
-                  <div th:each="news, iterStat : ${newsList}" class="flex items-center justify-center h-128 rounded-sm bg-gray-50 dark:bg-gray-800">
-                     <div class="w-full max-w-lg" 
-                           th:replace="~{news-card :: newsCard(id=${iterStat.index + 1}, title=${news.title}, description=${news.description}, link=${news.link})}">
-                     </div>
-                  </div>
-               </div>
-
+               
 
 
                <div class="flex items-center justify-center h-48 mb-4 rounded-sm bg-gray-50 dark:bg-gray-800">

@@ -68,11 +68,44 @@ public class PageController {
         }
         model.addAttribute("newsList", newsList);
 
-        model.addAttribute("content", "dashboard");
+        model.addAttribute("content", "view-dashboard");
 
         return "layout";
     }
 
+
+    @GetMapping("/view-transactions")
+    public String viewTransactionsPage(@ModelAttribute TransactionSearchRequest transactionSearchRequest, Model model) {
+
+        List<Transaction> transactions = transactionSearchService.searchTransactions(transactionSearchRequest);
+        model.addAttribute("transactions", transactions);
+
+        // Latest transaction
+        Transaction latestTransaction = transactions.isEmpty()
+                ? null
+                : transactions.get(transactions.size() - 1);
+        model.addAttribute("latestTransaction", latestTransaction);
+
+        model.addAttribute("content", "view-transactions");
+
+        return "layout";
+    }
+
+    
+    @GetMapping("/view-news")
+    public String viewNewsPage(@ModelAttribute TransactionSearchRequest transactionSearchRequest, Model model) {
+
+        // Fetch news list and limit to 9 elements
+        List<RssFeedItem> newsList = rssFeedService.getLatestNews();
+        if (newsList.size() > 3) {
+            newsList = newsList.subList(0, 9); // Trim the list to the first 3 elements
+        }
+        model.addAttribute("newsList", newsList);
+
+        model.addAttribute("content", "view-news");
+
+        return "layout";
+    }
 
 
     @PostMapping("/")

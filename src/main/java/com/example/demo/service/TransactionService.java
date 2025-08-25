@@ -38,14 +38,9 @@ public class TransactionService {
     // Inject RestTemplate/WebClient if needed
 
     public Transaction createTransaction(Transaction transaction) {
-        // Clean input symbol
-        transaction.setAssetSymbol(transaction.getAssetSymbol().toUpperCase().trim());
         // Fetch price from external API using assetSymbol and transaction.getDate()
         BigDecimal price = fetchPriceFromApi(transaction.getAssetSymbol(), transaction.getDate());
         transaction.setPricePerUnit(price);
-        if (transaction.getAssetName() == null || transaction.getAssetName().isEmpty()) {
-            transaction.setAssetName(transaction.getAssetSymbol()); // Default to symbol if name not provided
-        }
         // ...other business logic...
         return transactionRepository.save(transaction);
     }

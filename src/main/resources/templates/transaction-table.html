@@ -24,9 +24,9 @@
                     <td class="px-6 py-4" th:text="${transaction.assetSymbol}"></td>
                     <td class="px-6 py-4" th:text="${transaction.assetName}"></td>
                     <td class="px-6 py-4" th:text="${transaction.assetType}"></td>
-                    <td class="px-6 py-4 text-right" th:text="${transaction.quantity}"></td>
-                    <td class="px-6 py-4 text-right" th:text="${transaction.pricePerUnit}"></td>
-                    <td class="px-6 py-4 text-right" th:text="${transaction.totalAmount}"></td>
+                    <td class="px-6 py-4 text-right" th:text="${#numbers.formatDecimal(transaction.quantity, 1, 2)}"></td>
+                    <td class="px-6 py-4 text-right" th:text="${#numbers.formatCurrency(transaction.pricePerUnit)}"></td>
+                    <td class="px-6 py-4 text-right" th:text="${#numbers.formatCurrency(transaction.totalAmount)}"></td>
                     <td class="px-6 py-4" th:text="${transaction.currency}"></td>
                     <td class="px-6 py-4" th:text="${transaction.exchange}"></td>
                 </tr>

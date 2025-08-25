@@ -15,7 +15,9 @@
     </header>
 
     <main>
-        <!-- This is where child content will be inserted -->
+        <!--Dynamic trading ticket ribbon -->
+        <div th:replace="trading-ticker-tape :: tradingTickerTape"></div>
+        <!-- Main Content -->
         <div th:replace="${content}"></div>
     </main>
 

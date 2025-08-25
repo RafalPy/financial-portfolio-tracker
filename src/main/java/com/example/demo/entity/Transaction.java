@@ -114,7 +114,11 @@ public class Transaction {
     }
 
     public void setAssetSymbol(String assetSymbol) {
-        this.assetSymbol = assetSymbol;
+        if (assetSymbol != null) {
+            this.assetSymbol = assetSymbol.trim().toUpperCase();
+        } else {
+            this.assetSymbol = null;
+        }
     }
 
     public String getAssetName() {
@@ -176,13 +180,22 @@ public class Transaction {
 
     @PrePersist
     protected void onCreate() {
+        // Set createdAt to the current date if not already set
         if (createdAt == null) {
             createdAt = LocalDate.now();
         }
+
+        // Calculate totalAmount if pricePerUnit and quantity are provided
         if (pricePerUnit != null && quantity != null) {
             this.totalAmount = pricePerUnit.multiply(quantity);
         } else {
-            this.totalAmount = BigDecimal.ZERO; // or throw exception based on your logic
+            this.totalAmount = BigDecimal.ZERO; // Default to 0 if values are missing
+        }
+
+        // Set default assetName if it is null or empty
+        if (assetName == null || assetName.trim().isEmpty()) {
+            this.assetName = this.assetSymbol; // Default to assetSymbol
         }
     }
+    
 }

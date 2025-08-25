@@ -93,7 +93,7 @@ public class PageController {
 
     
     @GetMapping("/view-news")
-    public String viewNewsPage(@ModelAttribute TransactionSearchRequest transactionSearchRequest, Model model) {
+    public String viewNewsPage(Model model) {
 
         // Fetch news list and limit to 9 elements
         List<RssFeedItem> newsList = rssFeedService.getLatestNews();
@@ -104,6 +104,12 @@ public class PageController {
 
         model.addAttribute("content", "view-news");
 
+        return "layout";
+    }
+
+    @GetMapping("/ai-chat")
+    public String viewAIChatPage(Model model) {
+        model.addAttribute("content", "view-ai-chat");
         return "layout";
     }
 

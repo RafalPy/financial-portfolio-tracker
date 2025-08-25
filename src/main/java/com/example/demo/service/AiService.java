@@ -101,15 +101,15 @@ public class AiService {
                 "messages", List.of(
                         Map.of(
                                 "role", "system",
-                                "content", "You are a certified financial advisor with 10+ years of experience in wealth management." +
-                                        " Provide clear, actionable advice. Use simple language but include examples, pros and cons, and risk considerations. I have given you my portfolio holdings data. Try to speak on each possible asset. If possible get news from MarketWatch.com top stories headlines" +
-                                        "and link it to our portfolio holdings. You need to use current affairs based on the news if possible." +
-                                        "not more than 5 sentences " + " Here are some recent news headlines: " + newsTitles
-//                                        "about my portfolio selection or any other financial advice in general."
+                                "content", "You are a certified financial advisor with 10+ years of experience" +
+                                        " Provide clear, actionable piece of advice for one of my assets using at least one news headline. Use simple language but include examples, pros and cons, and risk considerations. I have given you my portfolio holdings data." +
+                                        "and link it to our portfolio holdings." +
+                                        "not more than 5 short sentences " + " Here are some recent news headlines: " + newsTitles
+
                         ),
                         Map.of(
                                 "role", "user",
-                                "content", "Here’s my portfolio:\n" + portfolioString
+                                "content", "Here’s my portfolio holdings :\n" + portfolioString
                         )
                 ),
                 "max_tokens", 150

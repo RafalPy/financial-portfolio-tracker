@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.demo.dto.TransactionSearchRequest;
+import com.example.demo.service.AiService;
 import com.example.demo.service.TransactionSearchService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import com.example.demo.entity.Transaction;
 import com.example.demo.service.RssFeedService;
 import com.example.demo.service.TransactionService;
 import org.springframework.web.bind.annotation.RequestParam;
+import reactor.core.publisher.Mono;
 
 @Controller
 public class PageController {
@@ -24,13 +26,17 @@ public class PageController {
     private final TransactionService transactionService;
     private final RssFeedService rssFeedService;
     private final TransactionSearchService transactionSearchService;
+    private final AiService aiService;
 
     public PageController(TransactionService transactionService,
                           RssFeedService rssFeedService,
-                          TransactionSearchService transactionSearchService) {
+                          TransactionSearchService transactionSearchService,
+                          AiService aiService) {
         this.transactionSearchService = transactionSearchService;
         this.transactionService = transactionService;
         this.rssFeedService = rssFeedService;
+        this.aiService = aiService;
+
     }
 
     @GetMapping("/")
@@ -38,6 +44,9 @@ public class PageController {
 
         List<Transaction> transactions = transactionSearchService.searchTransactions(transactionSearchRequest);
         model.addAttribute("transactions", transactions);
+
+        String aiMessageResponse = aiService.generateLandingPageText().block();
+        model.addAttribute("aiMessageResponse", aiMessageResponse);
 
         // 2. Portfolio holdings
         List<PortfolioHolding> portfolioHoldings = transactionService.getPortfolioHoldings();

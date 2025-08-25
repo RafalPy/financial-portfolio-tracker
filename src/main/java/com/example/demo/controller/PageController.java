@@ -23,9 +23,12 @@ public class PageController {
 
     private final TransactionService transactionService;
     private final RssFeedService rssFeedService;
+    private final TransactionSearchService transactionSearchService;
 
     public PageController(TransactionService transactionService,
-                          RssFeedService rssFeedService) {
+                          RssFeedService rssFeedService,
+                          TransactionSearchService transactionSearchService) {
+        this.transactionSearchService = transactionSearchService;
         this.transactionService = transactionService;
         this.rssFeedService = rssFeedService;
     }

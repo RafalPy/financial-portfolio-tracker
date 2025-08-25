@@ -95,7 +95,7 @@ public class AiService {
                         ),
                         Map.of(
                                 "role", "user",
-                                "content", "Here’s my portfolio:\n" + portfolioString + "\nGive me the most hyped-up motivational speech about it."
+                                "content", "Here’s my portfolio:\n" + portfolioString
                         )
                 ),
                 "max_tokens", 150

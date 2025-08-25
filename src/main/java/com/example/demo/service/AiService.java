@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.PortfolioHolding;
+import com.example.demo.dto.RssFeedItem;
+
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -19,11 +21,13 @@ public class AiService {
 
     private final WebClient webClient;
     private final TransactionService transactionService;
+    private final RssFeedService rssFeedService;
 
 
-    public AiService(TransactionService transactionService) {
+    public AiService(TransactionService transactionService, RssFeedService rssFeedService) {
 
         this.transactionService = transactionService;
+        this.rssFeedService = rssFeedService;
         // Load .env
         Dotenv dotenv = Dotenv.load();
         String apiKey = dotenv.get("OPENAI_API_KEY");
@@ -75,6 +79,16 @@ public class AiService {
 
         // 1. Get holdings
         List<PortfolioHolding> myPortfolio = transactionService.getPortfolioHoldings();
+        List<RssFeedItem> newsHeadlines = rssFeedService.getLatestNews();
+
+        // Extract only the titles and join them into a single string
+        String newsTitles = newsHeadlines.stream()
+        .map(RssFeedItem::getTitle) // Extract the title from each RssFeedItem
+        .collect(Collectors.joining(", ")); // Join titles with a comma and space
+        
+         if (myPortfolio.isEmpty()) {
+            return Mono.just("No portfolio data available.");
+        }
 
         // 2. Make them human-readable
         String portfolioString = myPortfolio.stream()
@@ -90,7 +104,7 @@ public class AiService {
                                 "content", "You are a certified financial advisor with 10+ years of experience in wealth management." +
                                         " Provide clear, actionable advice. Use simple language but include examples, pros and cons, and risk considerations. I have given you my portfolio holdings data. Try to speak on each possible asset. If possible get news from MarketWatch.com top stories headlines" +
                                         "and link it to our portfolio holdings. You need to use current affairs based on the news if possible." +
-                                        "not more than 5 sentences "
+                                        "not more than 5 sentences " + " Here are some recent news headlines: " + newsTitles
 //                                        "about my portfolio selection or any other financial advice in general."
                         ),
                         Map.of(
